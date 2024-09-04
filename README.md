@@ -12,18 +12,18 @@ There are two ways to run the tool :
     
   Run script using command:
 
-    python  app/downloader-utility.py --phylogeny "Chordata" --project_name "DToL"  --data_status "Mapped Reads - Done"  
+    python  app/downloader-utility.py --clade "Chordata" --project_name "DToL"  --data_status "Mapped Reads - Done"  
     --experiment_type "Chromium genome"  --download_location "/Users/raheela/Documents" --download_option "assemblies" 
     --species_list "Apamea sordens,Bufo bufo"
 
 
-python  app/downloader-utility.py --project_name "DToL" ---phylogeny 
+python  app/downloader-utility.py --project_name "DToL" ---clade 
 "Chordata"   --data_status "Mapped Reads - Done"  --experiment_type "Chromium genome"  --download_location 
 "/Users/raheela/Documents" --download_option "assemblies" --species_list "Apamea sordens,Bufo bufo"
 
 * `--project_name` (Required): The name of the project (e.g., DToL, ERGA, 25 
    genomes, Canadian BioGenome Project (CBP)).
-* `--phylogeny` (Optional/Required): The name of the taxonomy for the download 
+* `--clade` (Optional/Required): The name of the taxonomy for the download 
   (e.g., Chordata). Either --phylogeny or --species_list must be provided.
 * `--data_status` (Optional): The filter for data status (e.g., Biosamples - 
   Done, Raw Data - Done, Assemblies - Done, Annotation Complete - Done, Genome Notes - Done).
@@ -35,7 +35,7 @@ python  app/downloader-utility.py --project_name "DToL" ---phylogeny
 * `--species_list` (Optional/Required): The list of species to download. 
   Either --phylogeny or --species_list must be provided.
 
-Note: The `--phylogeny` and `--species_list` parameters are conditional you need to provide one of them.
+Note: The `--clade` and `--species_list` parameters are conditional you need to provide one of them.
 
 # 2. Build Docker Image: 
  Requirement:

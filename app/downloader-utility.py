@@ -84,14 +84,16 @@ def download_data(project_name: str, species_list: Optional[str],
         print('Using default download location')
         download_location = pathlib.Path(__file__).parent.resolve()
 
-    url = f"{portal_url_to_get_data} " \
+    url = f"{portal_url_to_get_data}" \
           f"/downloader_utility_data_with_species/?" \
-          f"species_list={species_list}&project_name={project_name}" \
+          f"species_list={species_list}&project_name=" \
+          f"{convert_project_name(project_name)}" \
         if species_list else \
         f"{portal_url_to_get_data}/downloader_utility_data" \
         f"/?taxonomy_filter={taxonomy_filter}" \
         f"&data_status={data_status or ''}&experiment_type=" \
-        f"{experiment_type or ''}&project_name={project_name}"
+        f"{experiment_type or ''}&project_name=" \
+        f"{convert_project_name(project_name)}"
 
     try:
         response = requests.get(url)
