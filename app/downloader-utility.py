@@ -64,7 +64,7 @@ def downloader(download_list: str, processes: str, download_location: str):
 def convert_project_name(project_name: str) -> str:
     """Convert project name to a standardized format.
      project_name -- Name of the project"""
-    return 'dtol' if project_name == 'DToL' else project_name
+    return 'DTOL' if project_name == 'DToL' else project_name
 
 
 def download_data(project_name: str, species_list: Optional[str],
