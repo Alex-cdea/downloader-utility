@@ -140,17 +140,26 @@ def generate_download_list(data_portal: List[dict], download_option: str,
             annotation = organism.get('_source', {}).get("annotation", [])
             for annotation_obj in annotation:
                 for key in ['GTF', 'GFF3', 'FASTA']:
+                    key_l = key.lower()
                     url = annotation_obj.get('annotation', {}).get(key)
                     if url:
-                        sub_dir = f'annotations/{key}'
-                        filename = url.split('/')[-1]
+                        sub_dir = f'annotations'
+                        accession = annotation_obj.get("accession")
+                        version = annotation_obj.get("version", '')
+                        #filename = url.split('/')[-1]
+                        filename = f"{accession}.{version}.{key_l}.gz" if version else \
+                           f"{accession}.{key_l}.gz "
                         download_list.append(
                             (url, filename, sub_dir, download_location))
                 for key in ['proteins', 'softmasked_genome', 'transcripts']:
                     url = annotation_obj.get(key, {}).get('FASTA')
                     if url:
-                        sub_dir = f'annotations/{key}'
-                        filename = url.split('/')[-1]
+                        sub_dir = f'annotations'
+                        accession = annotation_obj.get("accession")
+                        version = annotation_obj.get("version", '')
+                        #filename = url.split('/')[-1]
+                        filename = f"{accession}.{version}_{key}.fasta.gz" if version else \
+                           f"{accession}_{key}.fasta.gz "
                         download_list.append(
                             (url, filename, sub_dir, download_location))
 
@@ -161,15 +170,23 @@ def generate_download_list(data_portal: List[dict], download_option: str,
                 for key in ['sra-ftp', 'submitted_ftp']:
                     url = experiment.get(key)
                     if url:
-                        sub_dir = f'experiments/{key}'
-                        filename = url.split('/')[-1]
+                        accession = experiment.get("accession")
+                        version = experiment.get("version", '')
+                        sub_dir = f'experiments'
+                        #filename = url.split('/')[-1]
+                        filename = f"{accession}.{version}.{key}.gz" if version else \
+                           f"{accession}.{key}.gz "
                         download_list.append((f'http://{url}', filename,
                                               sub_dir, download_location))
                 fastq_ftp = experiment.get('fastq_ftp', '').split(';')
                 for url in fastq_ftp:
                     if url:
+                        accession = experiment.get("accession")
+                        version = experiment.get("version", '')
                         sub_dir = 'experiments/fastqFtp'
-                        filename = url.split('/')[-1]
+                        #filename = url.split('/')[-1]
+                        filename = f"{accession}.{version}.{key}.gz" if version else \
+                           f"{accession}.{key}.gz "
                         download_list.append((f'http://{url}', filename,
                                               sub_dir, download_location))
 
