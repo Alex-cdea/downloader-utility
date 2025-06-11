@@ -149,8 +149,8 @@ def generate_download_list(data_portal: List[dict], download_option: str,
                         accession = annotation_obj.get("accession")
                         version = annotation_obj.get("version", '')
                         #filename = url.split('/')[-1]
-                        filename = f"{accession}.{version}_{species_name}.{key_l}.gz" if version else \
-                           f"{accession}_{species_name}.{key_l}.gz"
+                        filename = f"{accession}.{version}_{species_name}.{key_l}" if version else \
+                           f"{accession}_{species_name}.{key_l}"
                         download_list.append(
                             (url, filename, sub_dir, download_location))
                 for key in ['proteins', 'softmasked_genome', 'transcripts']:
@@ -160,8 +160,8 @@ def generate_download_list(data_portal: List[dict], download_option: str,
                         accession = annotation_obj.get("accession")
                         version = annotation_obj.get("version", '')
                         #filename = url.split('/')[-1]
-                        filename = f"{accession}.{version}_{species_name}_{key}.fasta.gz" if version else \
-                           f"{accession}_{species_name}_{key}.fasta.gz"
+                        filename = f"{accession}.{version}_{species_name}_{key}.fasta" if version else \
+                           f"{accession}_{species_name}_{key}.fasta"
                         download_list.append(
                             (url, filename, sub_dir, download_location))
 
@@ -177,8 +177,8 @@ def generate_download_list(data_portal: List[dict], download_option: str,
                         version = experiment.get("version", '')
                         sub_dir = f'experiments'
                         #filename = url.split('/')[-1]
-                        filename = f"{accession}.{version}_{species_name}.{key}.gz" if version else \
-                           f"{accession}_{species_name}.{key}.gz"
+                        filename = f"{accession}.{version}_{species_name}.{key}" if version else \
+                           f"{accession}_{species_name}.{key}"
                         download_list.append((f'http://{url}', filename,
                                               sub_dir, download_location))
                 fastq_ftp = experiment.get('fastq_ftp', '').split(';')
@@ -188,8 +188,8 @@ def generate_download_list(data_portal: List[dict], download_option: str,
                         version = experiment.get("version", '')
                         sub_dir = 'experiments/fastqFtp'
                         #filename = url.split('/')[-1]
-                        filename = f"{accession}.{version}_{species_name}.{key}.gz" if version else \
-                           f"{accession}_{species_name}.{key}.gz"
+                        filename = f"{accession}.{version}_{species_name}.{key}" if version else \
+                           f"{accession}_{species_name}.{key}"
                         download_list.append((f'http://{url}', filename,
                                               sub_dir, download_location))
 
