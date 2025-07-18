@@ -107,10 +107,10 @@ def download_data(project_name: str, species_list: Optional[str],
         sys.exit(1)
 
     if taxonomy_filter and data_portal ==[]:
-       new_taxonomy_filter = grep_taxonomy_filter(taxonomy_filter,data_portal,"../taxonomy/Eukaryota_tax.tsv")
-       for tax_filter in new_taxonomy_filter:
+       new_taxonomy_filter = tax_filter.grep_taxonomy_filter(taxonomy_filter,data_portal,"../taxonomy/Eukaryota_tax.tsv.tar.gz")
+       for tax_groups in new_taxonomy_filter:
            url = f"{portal_url_to_get_data}/downloader_utility_data" \
-                 f"/?taxonomy_filter={tax_filter}" \
+                 f"/?taxonomy_filter={tax_groups}" \
                  f"&data_status={data_status or ''}&experiment_type=" \
                  f"{experiment_type or ''}&project_name=" \
                  f"{convert_project_name(project_name)}"
