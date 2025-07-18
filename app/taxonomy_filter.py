@@ -1,4 +1,6 @@
 import pandas as pd
+import tarfile
+import numpy as np 
 import re
 
 
@@ -17,6 +19,7 @@ def grep_taxonomy_filter(taxonomy_filter, data_portal, taxonomy_file_path):
     try:
         # Read file line by line to handle inconsistent columns
         data_rows = []
+        '''
         with open(taxonomy_file_path, 'r', encoding='utf-8') as f:
             for line_num, line in enumerate(f, 1):
                 line = line.strip()
@@ -33,9 +36,38 @@ def grep_taxonomy_filter(taxonomy_filter, data_portal, taxonomy_file_path):
                     parts = parts[:15]
                 
                 data_rows.append(parts)
+        '''
+        with tarfile.open(taxonomy_file_path, 'r:gz') as tar:
+        # Find the first .tsv file in the archive
+            tsv_member = next((m for m in tar.getmembers() if m.name.endswith('.tsv')), None)
+    
+            if tsv_member is None:
+                raise FileNotFoundError("No .tsv file found in the .tar.gz archive.")
+    
+            # Extract the file object
+            f = tar.extractfile(tsv_member)
+            if f is None:
+                raise IOError(f"Failed to extract {tsv_member.name} from the archive.")
+    
+            # Read and process lines
+            for line_num, line in enumerate(f, 1):
+                line = line.decode('utf-8').strip()
+                if not line:  # Skip empty lines
+                    continue
+        
+                parts = line.split('\t')
+        
+                # Ensure we have exactly 15 columns (pad or trim as needed)
+                if len(parts) < 15:
+                    parts.extend([''] * (15 - len(parts)))
+                elif len(parts) > 15:
+                    parts = parts[:15]
+        
+                data_rows.append(parts)
         
         # Create DataFrame from the processed data
         df = pd.DataFrame(data_rows, columns=column_names)
+        
         
     except FileNotFoundError:
         print(f"Error: Taxonomy file not found at {taxonomy_file_path}")
