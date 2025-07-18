@@ -14,7 +14,7 @@ fi
 
 eval "$(conda shell.bash hook)"
 
-conda env create -f downloader-utility.yml
+conda env create -p $PREFIX/downloader-utility_1/ -f downloader-utility.yml
 
 if [ $? -eq 0 ]
 then
