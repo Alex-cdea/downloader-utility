@@ -10,6 +10,9 @@ import warnings
 import multiprocessing
 import tax_filter
 
+dirname = os.path.dirname(__file__)
+file_tax = os.path.join(dirname, "../taxonomy/Eukaryota_tax.tsv.tar.gz")
+
 ena_url_download_fastq_file = 'https://www.ebi.ac.uk/ena/browser/api/fasta'
 portal_url_to_get_data = 'https://portal.erga-biodiversity.eu/api'
 
@@ -107,7 +110,9 @@ def download_data(project_name: str, species_list: Optional[str],
         sys.exit(1)
 
     if taxonomy_filter and data_portal ==[]:
-       new_taxonomy_filter = tax_filter.grep_taxonomy_filter(taxonomy_filter,data_portal,"../taxonomy/Eukaryota_tax.tsv.tar.gz")
+       new_taxonomy_filter = tax_filter.grep_taxonomy_filter(taxonomy_filter,
+                                                             data_portal,
+                                                             file_tax)
        for tax_groups in new_taxonomy_filter:
            url = f"{portal_url_to_get_data}/downloader_utility_data" \
                  f"/?taxonomy_filter={tax_groups}" \
@@ -117,19 +122,28 @@ def download_data(project_name: str, species_list: Optional[str],
            try:
                response = requests.get(url)
                response.raise_for_status()
-               data_portal = response.json() #######
+               data_portal = response.json()
            except requests.RequestException as e:
                print(f'Failed to fetch data: {e}')
                sys.exit(1)
 
-    download_list = generate_download_list(data_portal, download_option,
-                                           download_location)
-    if download_list:
-        print(f"Downloading {len(download_list)} files...\n")
-        downloader(download_list, processes, download_location)
-        print('All downloads completed.')
+           download_list = generate_download_list(data_portal, download_option,
+                                                              download_location)
+           if download_list:
+              print(f"Downloading {len(download_list)} files...\n")
+              downloader(download_list, processes, download_location)
+              print('All downloads completed.')
+           else:
+              print('No files to download.')
     else:
-        print('No files to download.')
+        download_list = generate_download_list(data_portal, download_option,
+                                              download_location)
+        if download_list:
+            print(f"Downloading {len(download_list)} files...\n")
+            downloader(download_list, processes, download_location)
+            print('All downloads completed.')
+        else:
+            print('No files to download.')
 
 
 def generate_download_list(data_portal: List[dict], download_option: str,
