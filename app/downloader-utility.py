@@ -6,6 +6,7 @@ import sys
 import pathlib
 import warnings
 import multiprocessing
+import taxonomy_filter
 
 ena_url_download_fastq_file = 'https://www.ebi.ac.uk/ena/browser/api/fasta'
 portal_url_to_get_data = 'https://portal.erga-biodiversity.eu/api'
@@ -102,6 +103,22 @@ def download_data(project_name: str, species_list: Optional[str],
     except requests.RequestException as e:
         print(f'Failed to fetch data: {e}')
         sys.exit(1)
+
+    if taxonomy_filter and data_portal ==[]:
+       new_taxonomy_filter = grep_taxonomy_filter(taxonomy_filter,data_portal,"../taxonomy/Eukaryota_tax.tsv")
+       for tax_filter in new_taxonomy_filter:
+           url = f"{portal_url_to_get_data}/downloader_utility_data" \
+                 f"/?taxonomy_filter={tax_filter}" \
+                 f"&data_status={data_status or ''}&experiment_type=" \
+                 f"{experiment_type or ''}&project_name=" \
+                 f"{convert_project_name(project_name)}"
+           try:
+               response = requests.get(url)
+               response.raise_for_status()
+               data_portal = response.json() #######
+           except requests.RequestException as e:
+               print(f'Failed to fetch data: {e}')
+               sys.exit(1)
 
     download_list = generate_download_list(data_portal, download_option,
                                            download_location)
