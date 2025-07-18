@@ -15,7 +15,7 @@ There are two ways to run the tool :
       git clone https://github.com/Alex-cdea/downloader-utility.git
       cd downloader-utility
       chmod +x conda_install.sh
-      conda_install.sh path/to/install/directory/
+      ./conda_install.sh path/to/install/directory/
     
   Run script using command:
 
