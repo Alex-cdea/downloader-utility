@@ -1,6 +1,12 @@
 #!/bin/bash
 
-PREFIX=$1
+PREFIX=$(realpath $1)
+
+if [ -z "$PREFIX" ]
+then
+  echo "Error: you must provide a path."
+  exit
+fi
 
 sed -i "s+PREFIX+${PREFIX}+" \
 downloader-utility.yml
