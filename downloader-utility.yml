@@ -1,4 +1,4 @@
-name: downloader-utility_1
+name: PREFIX/downloader-utility_1
 channels:
   - conda-forge
   - defaults
