@@ -27,6 +27,7 @@ then
   mkdir -p $PREFIX/downloader-utility_1/share/
   cd ../
   mv downloader-utility/ $PREFIX/downloader-utility_1/share/
+  chmod +x $PREFIX/downloader-utility_1/share/downloader-utility/app/downloader-utility.py
   ln -s $PREFIX/downloader-utility_1/share/downloader-utility/app/downloader-utility.py \
   $PREFIX/downloader-utility_1/downloader-utility.py
   sed -i "s+file_tax =.*+file_tax = \"$PREFIX/downloader-utility_1/share/downloader-utility/taxonomy/Eukaryota_tax.tsv.tar.gz\"+" \
@@ -39,6 +40,7 @@ else
       mkdir -p $PREFIX/downloader-utility_1/share/
       cd ../
       mv downloader-utility/ $PREFIX/downloader-utility_1/share/
+      chmod +x $PREFIX/downloader-utility_1/share/downloader-utility/app/downloader-utility.py
       ln -s $PREFIX/downloader-utility_1/share/downloader-utility/app/downloader-utility.py \
       $PREFIX/downloader-utility_1/downloader-utility.py
       sed -i "s+file_tax =.*+file_tax = \"$PREFIX/downloader-utility_1/share/downloader-utility/taxonomy/Eukaryota_tax.tsv.tar.gz\"+" \
