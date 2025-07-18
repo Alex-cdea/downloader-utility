@@ -19,6 +19,7 @@ conda env create -f downloader-utility.yml
 if [ $? -eq 0 ]
 then
   mkdir -p $PREFIX/downloader-utility_1/share/
+  cd ../
   mv downloader-utility/ $PREFIX/downloader-utility_1/share/
   sed -i "s+file_tax =.*+file_tax = \"$PREFIX/downloader-utility_1/share/downloader-utility/taxonomy/Eukaryota_tax.tsv.tar.gz\"+" \
   $PREFIX/downloader-utility_1/share/downloader-utility/app/downloader-utility.py
@@ -28,6 +29,7 @@ else
   if [ $? -eq 0 ]
   then
       mkdir -p $PREFIX/downloader-utility_1/share/
+      cd ../
       mv downloader-utility/ $PREFIX/downloader-utility_1/share/
       sed -i "s+file_tax =.*+file_tax = \"$PREFIX/downloader-utility_1/share/downloader-utility/taxonomy/Eukaryota_tax.tsv.tar.gz\"+" \
       $PREFIX/downloader-utility_1/share/downloader-utility/app/downloader-utility.py
