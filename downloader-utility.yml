@@ -1,4 +1,4 @@
-name: /lustre1/home/privman/alexandrac/DATA/envs/conda/downloader-utility_1
+name: PREFIX/downloader-utility_1
 channels:
   - conda-forge
   - defaults
@@ -66,4 +66,4 @@ dependencies:
       - requests==2.28.1
       - tqdm==4.67.1
       - urllib3==1.26.20
-prefix: /lustre1/home/privman/alexandrac/DATA/envs/conda/downloader-utility_1
+prefix: PREFIX/downloader-utility_1
