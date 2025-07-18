@@ -8,7 +8,7 @@ import sys
 import pathlib
 import warnings
 import multiprocessing
-import taxonomy_filter
+import tax_filter
 
 ena_url_download_fastq_file = 'https://www.ebi.ac.uk/ena/browser/api/fasta'
 portal_url_to_get_data = 'https://portal.erga-biodiversity.eu/api'
